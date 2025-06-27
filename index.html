@@ -197,6 +197,62 @@
     .footer-copyright {
       margin-top: 180px;
     }
+
+    /* 모바일 대응 */
+    @media (max-width: 768px) {
+      .header {
+        padding: 16px 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .logo {
+        font-size: 1.1rem;
+        padding-left: 0;
+        margin-bottom: 10px;
+      }
+
+      .nav {
+        padding-right: 0;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        margin: 8px 12px;
+        font-size: 0.9rem;
+      }
+
+      #PROJECTS {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .photo-item {
+        width: 100% !important;
+        margin-bottom: 30px;
+      }
+
+      .photo-names {
+        padding: 0 10px;
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        padding: 20px 15px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .footer-contact {
+        margin-bottom: 60px;
+      }
+
+      .footer-copyright {
+        margin-top: 80px;
+      }
+    }
   </style>
 </head>
 <body>
