@@ -1,70 +1,341 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>8MENT Studio — Under Construction</title>
-<style>
-  @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>8MENT Studio</title>
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  html, body {
-    margin: 0; padding: 0;
-    height: 100vh;
-    background: #fff;
-    color: #000;
-    font-family: 'Pretendard', sans-serif, sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    user-select: none;
-  }
+    html, body {
+      background-color: #fff;
+      color: #000;
+      font-family: 'Pretendard', sans-serif;
+      transition: opacity 0.4s ease;
+      opacity: 1;
+    }
 
-  .logo {
-    font-size: 5rem;
-    font-weight: 900;
-    letter-spacing: -0.02em; /* 조금만 넓힘 */
-    user-select: text;
-    position: relative;
-  }
+    body.fade-out {
+      opacity: 0;
+    }
 
-  /* 8MENT 텍스트 부드러운 애니메이션 */
-  .logo::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 6px;
-    bottom: -12px;
-    left: 0;
-    background: linear-gradient(90deg, transparent, #000, transparent);
-    animation: shine 2.5s infinite ease-in-out;
-    border-radius: 3px;
-  }
+    .header {
+      width: 100%;
+      padding: 32px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
 
-  @keyframes shine {
-    0% { transform: translateX(-100%); opacity: 0; }
-    50% { transform: translateX(100%); opacity: 0.3; }
-    100% { transform: translateX(100%); opacity: 0; }
-  }
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #000;
+      padding-left: 20px;
+      text-decoration: none;
+      cursor: pointer;
+    }
 
-  .subtitle {
-    margin-top: 18px;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #555;
-    letter-spacing: 0.1em;
-    opacity: 0.7;
-    animation: pulse 3s infinite ease-in-out;
-  }
+    .nav {
+      display: flex;
+      align-items: center;
+      padding-right: 20px;
+    }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 0.3; }
-  }
-</style>
+    .nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      color: #000;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav a:hover {
+      color: #555;
+    }
+
+    .intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+
+    .intro.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .intro h1 {
+      font-size: 2rem;
+      padding: 0 20px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding-top: 100px;
+    }
+
+    #PROJECTS {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 8px;
+      margin-bottom: 120px;
+    }
+
+    .photo-item {
+      width: calc(50% - 4px);
+      margin-bottom: 50px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      pointer-events: none;
+    }
+
+    .photo-item.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .photo-item.fade-out {
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+
+    .photo-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .photo-names {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #000;
+      padding: 0 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease;
+      user-select: none;
+    }
+
+    .photo-item:hover .photo-names {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .footer {
+      width: 100%;
+      padding: 26px 36px;
+      font-weight: 500;
+      font-size: 16px;
+      color: #000;
+      text-align: left;
+      background: #fff;
+      line-height: 1.4;
+    }
+
+    .footer-instagram {
+      margin-bottom: 24px;
+    }
+
+    .footer-instagram a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-instagram a:hover {
+      color: #555;
+    }
+
+    .footer-address {
+      margin-bottom: 24px;
+    }
+
+    .footer-address div {
+      margin-bottom: 4px;
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 120px;
+    }
+
+    .footer-copyright {
+      margin-top: 180px;
+    }
+  </style>
 </head>
 <body>
-  <div class="logo">8MENT</div>
-  <div class="subtitle">UNDER CONSTRUCTION</div>
+
+  <header class="header">
+    <a href="/" class="logo">8MENT</a>
+    <nav class="nav">
+      <a href="#PROJECTS">PROJECTS</a>
+      <a href="about.html">ABOUT</a>
+      <a href="contact.html">CONTACT</a>
+    </nav>
+  </header>
+
+  <div class="intro" id="intro">
+    <h1>STRATEGIC BY DESIGN, DEFINED BY 8MENT</h1>
+  </div>
+
+  <div class="content">
+    <section id="PROJECTS">
+      <div class="photo-item"><img src="images/work4.webp" alt="사진1" /><div class="photo-names"><div>VOID Museum of Contemporary Art</div><div>The Edge of Presence</div></div></div>
+      <div class="photo-item"><img src="images/work2.webp" alt="사진2" /><div class="photo-names"><div>Portlogics</div><div>Corporate Identity</div></div></div>
+      <div class="photo-item"><img src="images/work1.webp" alt="사진3" /><div class="photo-names"><div>LE BOA</div><div>Modern Jewelry</div></div></div>
+      <div class="photo-item"><img src="images/work6.webp" alt="사진4" /><div class="photo-names"><div>Cellon</div><div>Visual Identity Design</div></div></div>
+      <div class="photo-item"><img src="images/work3.webp" alt="사진5" /><div class="photo-names"><div>Section 3</div><div>Company Essentials</div></div></div>
+      <div class="photo-item"><img src="images/work5.webp" alt="사진6" /><div class="photo-names"><div>Dongtan Orthopedic Clinic</div><div>Environmental Application</div></div></div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-instagram">
+      <a href="https://www.instagram.com/8ment.design" target="_blank">Follow us on Instagram</a>
+    </div>
+    <div class="footer-address">
+      <div>8MENT Studio.</div>
+      <div>56 Reservoir Street,</div>
+      <div>Surry Hills NSW 2010</div>
+      <div>Sydney, Australia</div>
+    </div>
+    <div class="footer-contact">
+      <div>T. +61(0)401 080 713</div>
+      <div>E. studio@8ment.com</div>
+    </div>
+    <div class="footer-copyright">
+      8MENT ©2025. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const intro = document.getElementById('intro');
+      const hasSeenIntro = sessionStorage.getItem('introSeen');
+
+      const hideIntro = () => {
+        intro.classList.remove('visible');
+      };
+
+      if (!hasSeenIntro) {
+        intro.classList.add('visible');
+        sessionStorage.setItem('introSeen', 'true');
+        setTimeout(() => {
+          hideIntro();
+        }, 5000);
+      }
+
+      intro.addEventListener('click', hideIntro);
+
+      document.querySelectorAll('.nav a[href]').forEach(link => {
+        link.addEventListener('click', e => {
+          const href = link.getAttribute('href');
+          const currentPath = window.location.pathname.split('/').pop();
+          const isAnchorLink = href.startsWith('#');
+
+          if (isAnchorLink) {
+            e.preventDefault();
+            const targetId = href.substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+              hideIntro();
+              window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+              });
+            }
+            return;
+          }
+
+          if (href === currentPath) {
+            e.preventDefault();
+            return;
+          }
+
+          e.preventDefault();
+          document.body.classList.add('fade-out');
+          hideIntro();
+          setTimeout(() => {
+            window.location.href = href;
+          }, 400);
+        });
+      });
+
+      const logo = document.querySelector('.logo');
+      logo.addEventListener('click', e => {
+        const href = logo.getAttribute('href');
+        const currentPath = window.location.pathname.split('/').pop();
+        if (href === currentPath) {
+          e.preventDefault();
+          return;
+        }
+        e.preventDefault();
+        document.body.classList.add('fade-out');
+        hideIntro();
+        setTimeout(() => {
+          window.location.href = href;
+        }, 400);
+      });
+
+      const photoItems = document.querySelectorAll('.photo-item');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            photoItems.forEach(item => {
+              item.classList.add('fade-in');
+              item.classList.remove('fade-out');
+            });
+          } else {
+            photoItems.forEach(item => {
+              item.classList.remove('fade-in');
+              item.classList.add('fade-out');
+            });
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      const projectsSection = document.getElementById('PROJECTS');
+      observer.observe(projectsSection);
+    });
+  </script>
+
 </body>
 </html>
