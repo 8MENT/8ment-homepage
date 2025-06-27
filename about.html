@@ -69,7 +69,7 @@
       flex-grow: 1;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 140px 40px 0 40px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -80,8 +80,6 @@
       line-height: 1.5;
       user-select: none;
       min-height: calc(100vh - 120px);
-      position: relative;
-      top: 60px;
     }
 
     .content p {
@@ -137,8 +135,8 @@
     /* 모바일 전용 스타일 */
     @media (max-width: 768px) {
       .content {
-        font-size: 16px;
-        padding: 0 20px;
+        font-size: 14px; /* 16px에서 14px로 줄임 */
+        padding: 140px 20px 0 20px;
       }
     }
   </style>
