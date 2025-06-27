@@ -96,6 +96,10 @@
       font-weight: 700;
     }
 
+    .intro h1 .br {
+      display: none;
+    }
+
     .content {
       padding-top: 100px;
     }
@@ -121,12 +125,6 @@
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
-    }
-
-    .photo-item.fade-out {
-      opacity: 0;
-      transform: translateY(20px);
-      pointer-events: none;
     }
 
     .photo-item img {
@@ -175,14 +173,6 @@
       text-decoration: none;
     }
 
-    .footer-instagram a:hover {
-      color: #555;
-    }
-
-    .footer-address {
-      margin-bottom: 24px;
-    }
-
     .footer-address div {
       margin-bottom: 4px;
     }
@@ -198,8 +188,11 @@
       margin-top: 180px;
     }
 
-    /* 모바일 대응 */
     @media (max-width: 768px) {
+      .intro h1 .br {
+        display: block;
+      }
+
       .header {
         padding: 16px 10px;
         flex-wrap: wrap;
@@ -224,11 +217,6 @@
         font-size: 0.9rem;
       }
 
-      #PROJECTS {
-        flex-direction: column;
-        gap: 16px;
-      }
-
       .photo-item {
         width: 100% !important;
         margin-bottom: 30px;
@@ -239,7 +227,6 @@
         font-size: 0.9rem;
       }
 
-      /* 첫 번째 이미지의 이름만 폰트 크기 작게 */
       #PROJECTS .photo-item:nth-child(1) .photo-names {
         font-size: 0.75rem;
       }
@@ -261,7 +248,6 @@
   </style>
 </head>
 <body>
-
   <header class="header">
     <a href="/" class="logo">8MENT</a>
     <nav class="nav">
@@ -272,7 +258,11 @@
   </header>
 
   <div class="intro" id="intro">
-    <h1>STRATEGIC BY DESIGN, DEFINED BY 8MENT</h1>
+    <h1>
+      STRATEGIC BY DESIGN,<span class="br"></span>
+      DEFINED BY<span class="br"></span>
+      8MENT
+    </h1>
   </div>
 
   <div class="content">
@@ -380,12 +370,10 @@
           if (entry.isIntersecting) {
             photoItems.forEach(item => {
               item.classList.add('fade-in');
-              item.classList.remove('fade-out');
             });
           } else {
             photoItems.forEach(item => {
               item.classList.remove('fade-in');
-              item.classList.add('fade-out');
             });
           }
         });
@@ -397,6 +385,5 @@
       observer.observe(projectsSection);
     });
   </script>
-
 </body>
 </html>
